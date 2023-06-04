@@ -40,7 +40,6 @@ namespace Parque.Persistence.DBcontext
                     case EntityState.Added:
                         entry.Entity.CreatedDate = _dateTimeService.NowUtc;
                         entry.Entity.CreatedBy = "admin ";
-
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedDate = _dateTimeService.NowUtc;
