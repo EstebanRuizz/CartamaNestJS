@@ -6,6 +6,5 @@ namespace Parque.Domain.Entites
     {
         public string BaseRoute { get; set; }
         public string Name { get; set; }
-
     }
 }
