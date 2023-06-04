@@ -20,7 +20,7 @@
 
         public GeniricResponse(string message)
         {
-            Succeed = true;
+            Succeed = false;
             Message = message;
         }
 

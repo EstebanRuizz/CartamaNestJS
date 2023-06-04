@@ -2,6 +2,7 @@
 using Parque.Application.Interfaces;
 using Parque.Domain.BaseEntity;
 using Parque.Domain.Entites;
+using System.Reflection;
 
 namespace Parque.Persistence.DBcontext
 {
@@ -50,6 +51,12 @@ namespace Parque.Persistence.DBcontext
                 }
             }
             return base.SaveChangesAsync();
+        }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
     }

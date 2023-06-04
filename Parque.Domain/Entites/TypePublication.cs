@@ -8,6 +8,6 @@ namespace Parque.Domain.Entites
         public string Description { get; set; }
 
 
-        public ICollection<TypePublication> Publications { get; } = new List<TypePublication>();
+        public ICollection<Publication> Publications { get; } = new List<Publication>();
     }
 }
