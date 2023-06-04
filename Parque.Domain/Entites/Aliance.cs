@@ -8,9 +8,6 @@ namespace Parque.Domain.Entites
         public string AlianceDate { get; set; }
         public int IdTypeAliance { get; set; }
         public string DocumentRoute { get; set; }
-
-
         public virtual TypeAliance IdTypeAliancesNavigation { get; set; }
-
     }
 }
