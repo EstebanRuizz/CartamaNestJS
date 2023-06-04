@@ -18,6 +18,8 @@ namespace Parque.Persistence
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(GenericRepository<>));
             #endregion
 
+
+
         }
     }
 }

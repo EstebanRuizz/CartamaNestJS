@@ -32,6 +32,7 @@ namespace Parque.Persistence.DBcontext
         public virtual DbSet<User> Users { get; set; }
 
 
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())

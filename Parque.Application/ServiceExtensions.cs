@@ -11,6 +11,8 @@ namespace Parque.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(p => p.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+
         }
     }
 }
