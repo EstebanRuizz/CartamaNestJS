@@ -12,8 +12,8 @@ using Parque.Persistence.DBcontext;
 namespace Parque.Persistence.Migrations
 {
     [DbContext(typeof(ParqueDbContext))]
-    [Migration("20230604225358_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230611002416_primerMigration")]
+    partial class primerMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

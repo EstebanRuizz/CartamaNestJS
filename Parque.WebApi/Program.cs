@@ -1,5 +1,7 @@
 using Parque.Application;
 using Parque.Persistence;
+using Parque.Shared;
+using Parque.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +13,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Services 
-
 builder.Services.AddIOCApplicationLayer();
 builder.Services.AddIOCPersintenceLayer(builder.Configuration);
+builder.Services.AddIOCSharedLayer();
+builder.Services.AddApiVesionExtensions();
 // end Services
 
 
@@ -30,7 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
+app.UseErrorHandlingMiddleware();
 app.MapControllers();
 
 app.Run();

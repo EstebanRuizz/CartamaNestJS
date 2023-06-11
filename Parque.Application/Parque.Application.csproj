@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Features\" />
-    <Folder Include="Mappings\" />
+    <Folder Include="Features\Aliances\Commands\" />
+    <Folder Include="Features\Enviromments\" />
+    <Folder Include="Features\Inscriptions\" />
+    <Folder Include="Features\NewsPaper\" />
+    <Folder Include="Features\Roles\" />
+    <Folder Include="Features\Publications\" />
+    <Folder Include="Features\Reservations\" />
+    <Folder Include="Features\Users\" />
     <Folder Include="Filters\" />
   </ItemGroup>
 

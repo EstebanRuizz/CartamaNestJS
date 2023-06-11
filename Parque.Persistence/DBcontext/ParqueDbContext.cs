@@ -8,7 +8,7 @@ namespace Parque.Persistence.DBcontext
 {
     public class ParqueDbContext : DbContext
     {
-        public ParqueDbContext() { }
+
 
         private readonly IDateTimeService _dateTimeService;
         public ParqueDbContext(DbContextOptions<ParqueDbContext> options, IDateTimeService dateTimeService) : base(options)
