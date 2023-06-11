@@ -17,7 +17,7 @@ namespace Parque.Persistence.Repositories
         {
             try
             {
-                var listAliances = await _parqueDbContext.Aliances.Include(p => p.IdTypeAliance == p.IdTypeAliancesNavigation.Id).ToListAsync();
+                var listAliances = await _parqueDbContext.Aliances.Include(p => p.IdTypeAliancesNavigation).ToListAsync();
                 return listAliances;
             }
             catch (Exception)
