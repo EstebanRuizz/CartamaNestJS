@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Parque.Persistence.Repositories
 {
-    public class GenericRepository<T> : IUnitOfWork, IRepositoryAsync<T> where T : class
+    public class GenericRepository<T> : IRepositoryAsync<T> where T : class
     {
         private readonly ParqueDbContext _context;
 
@@ -14,13 +14,13 @@ namespace Parque.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<bool> CreateAsync(T entity)
+        public async Task<T> CreateAsync(T entity)
         {
             try
             {
                 await _context.Set<T>().AddAsync(entity);
 
-                return true;
+                return entity;
             }
             catch (Exception ex)
             {

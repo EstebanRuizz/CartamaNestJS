@@ -8,6 +8,11 @@ namespace Parque.Application.Features.Aliances.Querys.GetAllAliances
 {
     public class GetAllAliancesQuery : IRequest<GenericResponse<List<AliancesDTO>>>
     {
+        public int PageSize { get; set; }
+        public int PageNumber { get; set; }
+        public string Nombre { get; set; }
+        public string FechaAlianza { get; set; }
+        public int? TypeAliance { get; set; }
 
     }
 

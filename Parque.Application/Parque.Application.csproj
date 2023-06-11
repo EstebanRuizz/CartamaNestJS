@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Aliances\Commands\" />
     <Folder Include="Features\Enviromments\" />
     <Folder Include="Features\Inscriptions\" />
     <Folder Include="Features\NewsPaper\" />
