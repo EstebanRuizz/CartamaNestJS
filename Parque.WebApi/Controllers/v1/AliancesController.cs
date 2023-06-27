@@ -12,17 +12,9 @@ namespace Parque.WebApi.Controllers.v1
     {
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllAliancesParameters filter)
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(await Mediator.Send(new GetAllAliancesQuery()
-            {
-                FechaAlianza = filter.FechaAlianza,
-                Nombre = filter.Nombre,
-                PageNumber = filter.PageNumber,
-                PageSize = filter.PageSize,
-                TypeAliance = filter.TypeAliance
-
-            }));
+            return Ok(await Mediator.Send(new GetAllAliancesQuery()));
         }
 
         [HttpPost]
