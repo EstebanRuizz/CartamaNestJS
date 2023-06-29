@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parque.Persistence.DBcontext;
 
@@ -11,9 +12,11 @@ using Parque.Persistence.DBcontext;
 namespace Parque.Persistence.Migrations
 {
     [DbContext(typeof(ParqueDbContext))]
-    partial class ParqueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230629012152_CorrecionErrorMigracion")]
+    partial class CorrecionErrorMigracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

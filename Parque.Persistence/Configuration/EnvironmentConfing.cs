@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Parque.Persistence.Configuration
 {
-    public class EnvironmentConfig : IEntityTypeConfiguration<Domain.Entites.Environment>
+    public class EnvironmentConfig : IEntityTypeConfiguration<Domain.Entites.Enviroment>
     {
-        public void Configure(EntityTypeBuilder<Domain.Entites.Environment> builder)
+        public void Configure(EntityTypeBuilder<Domain.Entites.Enviroment> builder)
         {
-            builder.ToTable("Environment");
+            builder.ToTable("Enviroment");
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Description).HasMaxLength(500).IsRequired();
             builder.Property(p => p.Title).HasMaxLength(250).IsRequired();

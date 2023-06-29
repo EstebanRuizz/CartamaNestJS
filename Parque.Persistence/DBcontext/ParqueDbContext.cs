@@ -19,7 +19,7 @@ namespace Parque.Persistence.DBcontext
 
         public virtual DbSet<Aliance> Aliances { get; set; }
         public virtual DbSet<DocumentRoutes> DocumentRoutes { get; set; }
-        public virtual DbSet<Parque.Domain.Entites.Environment> Environments { get; set; }
+        public virtual DbSet<Enviroment> Enviroments { get; set; }
         public virtual DbSet<Inscription> Inscriptions { get; set; }
         public virtual DbSet<NewsPaper> NewsPapers { get; set; }
         public virtual DbSet<Publication> Publications { get; set; }
