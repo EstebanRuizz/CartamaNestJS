@@ -10,16 +10,23 @@
     <Folder Include="Features\Enviromments\Commands\Create\" />
     <Folder Include="Features\Inscriptions\" />
     <Folder Include="Features\NewsPaper\" />
-    <Folder Include="Features\Roles\" />
     <Folder Include="Features\Publications\" />
     <Folder Include="Features\Reservations\" />
-    <Folder Include="Features\Users\" />
+    <Folder Include="Features\Roles\Commands\" />
+    <Folder Include="Features\Roles\Queries\" />
+    <Folder Include="Features\TypeAliances\Commands\" />
+    <Folder Include="Features\TypeAliances\Queries\" />
+    <Folder Include="Features\TypeDocuments\Commands\" />
+    <Folder Include="Features\TypeDocuments\Queries\" />
+    <Folder Include="Features\TypePublications\Commands\" />
+    <Folder Include="Features\TypePublications\Queries\" />
     <Folder Include="Filters\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
     <PackageReference Include="MediatR" Version="12.0.1" />
