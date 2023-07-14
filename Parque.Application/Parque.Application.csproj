@@ -18,9 +18,7 @@
     <Folder Include="Features\TypeAliances\Queries\" />
     <Folder Include="Features\TypeDocuments\Commands\" />
     <Folder Include="Features\TypeDocuments\Queries\" />
-    <Folder Include="Features\TypePublications\Commands\CreateTypePublications\" />
-    <Folder Include="Features\TypePublications\Commands\DeleteTypePublications\" />
-    <Folder Include="Features\TypePublications\Commands\UpdateTypePublications\" />
+    <Folder Include="Features\TypePublications\Commands\" />
     <Folder Include="Features\TypePublications\Queries\" />
     <Folder Include="Filters\" />
   </ItemGroup>
