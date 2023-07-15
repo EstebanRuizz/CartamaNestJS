@@ -16,8 +16,7 @@ namespace Parque.Application.Features.Aliances.Commands.CreateAliances
         public string Base64Archivo { get; set; }
         public string NombreCompletoArchivo { get; set; }
     }
-
-    public class CreateAliancesCommandHandler : IRequestHandler<CreateAliancesCommand, GenericResponse<int>>
+    internal class CreateAliancesCommandHandler : IRequestHandler<CreateAliancesCommand, GenericResponse<int>>
     {
         private readonly IRepositoryAsync<Aliance> _repositoryAsync;
         private readonly IMapper _mapper;
@@ -26,22 +25,13 @@ namespace Parque.Application.Features.Aliances.Commands.CreateAliances
         {
             _repositoryAsync = repositoryAsync;
             _mapper = mapper;
-
         }
 
         public async Task<GenericResponse<int>> Handle(CreateAliancesCommand request, CancellationToken cancellationToken)
         {
-
             try
             {
-                Aliance alianzaNueva = new Aliance()
-                {
-                    Description = request.Description,
-                    Name = request.Name,
-                    AlianceDate = request.AlianceDate,
-                    IdTypeAliance = request.IdTypeAliance,
-                    DocumentRoute = request.DocumentRoute
-                };
+                Aliance alianzaNueva = _mapper.Map<CreateAliancesCommand, Aliance>(request);
 
                 var alianza = await _repositoryAsync.CreateAsync(alianzaNueva);
                 await _repositoryAsync.SaveChangesAsync();
@@ -50,10 +40,8 @@ namespace Parque.Application.Features.Aliances.Commands.CreateAliances
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
     }
 }

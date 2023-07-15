@@ -16,7 +16,7 @@ namespace Parque.Application.Features.Users.Commands.UpdateUsers
     public class UpdateUserCommand : IRequest<GenericResponse<bool>>
     {
         public int Id { get; set; }
-        public string IdentityDocument { get; set; }
+        public string NationalIdentificationNumber { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -46,7 +46,7 @@ namespace Parque.Application.Features.Users.Commands.UpdateUsers
                 if (usuario == null)
                     throw new KeyNotFoundException($"Usuario con el id : {request.Id} no existe");
 
-                usuario.IdentityDocument = request.IdentityDocument ;
+                usuario.NationalIdentificationNumber = request.NationalIdentificationNumber;
                 usuario.Email = request.Email ;
                 usuario.FirstName = request.FirstName ;
                 usuario.LastName = request.LastName ;

@@ -14,7 +14,7 @@ namespace Parque.Application.Features.Users.Commands.CreateUsers
 {
     public class CreateUserCommand : IRequest<GenericResponse<int>>
     {
-        public string IdentityDocument { get; set; }
+        public string NationalIdentificationNumber { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -42,7 +42,7 @@ namespace Parque.Application.Features.Users.Commands.CreateUsers
             {
                 User nuevoUsuario = new User()
                 {
-                    IdentityDocument = request.IdentityDocument,
+                    NationalIdentificationNumber = request.NationalIdentificationNumber,
                     Email = request.Email,
                     FirstName = request.FirstName,
                     LastName = request.LastName,
@@ -60,7 +60,6 @@ namespace Parque.Application.Features.Users.Commands.CreateUsers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

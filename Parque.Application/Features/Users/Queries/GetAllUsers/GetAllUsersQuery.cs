@@ -12,12 +12,9 @@ using System.Threading.Tasks;
 
 namespace Parque.Application.Features.Users.Queries.GetAllUsers
 {
-    public class GetAllUsersQuery : IRequest<GenericResponse<List<UserDTO>>>
-    {
+    public class GetAllUsersQuery : IRequest<GenericResponse<List<UserListDTO>>> {}
 
-    }
-
-    internal class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, GenericResponse<List<UserDTO>>>
+    internal class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, GenericResponse<List<UserListDTO>>>
     {
         private readonly IRepositoryAsync<User> _repositoryAsync;
         private readonly IMapper _mapper;
@@ -28,16 +25,15 @@ namespace Parque.Application.Features.Users.Queries.GetAllUsers
             _mapper = mapper;
         }
 
-        public async Task<GenericResponse<List<UserDTO>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<GenericResponse<List<UserListDTO>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var users = await _repositoryAsync.GetAllAsync();
-                return new GenericResponse<List<UserDTO>>(_mapper.Map<List<UserDTO>>(users));
+                return new GenericResponse<List<UserListDTO>>(_mapper.Map<List<UserListDTO>>(users));
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

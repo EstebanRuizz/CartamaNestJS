@@ -1,4 +1,6 @@
+using AutoMapper;
 using Parque.Application;
+using Parque.Application.Mappings;
 using Parque.Persistence;
 using Parque.Shared;
 using Parque.WebApi.Extensions;
@@ -19,6 +21,15 @@ builder.Services.AddIOCPersintenceLayer(builder.Configuration);
 builder.Services.AddIOCSharedLayer();
 builder.Services.AddApiVesionExtensions();
 // end Services
+
+// Configuración de AutoMapper
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<GeneralProfile>(); // Agregar el perfil GeneralProfile
+});
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
 
 builder.Services.AddCors(options =>
 {

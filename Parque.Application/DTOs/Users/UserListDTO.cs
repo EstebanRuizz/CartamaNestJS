@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parque.Application.DTOs.Users
 {
-    public class UserDTO
+    public class UserListDTO
     {
         public int Id { get; set; }
         public string NationalIdentificationNumber { get; set; }
@@ -15,9 +15,7 @@ namespace Parque.Application.DTOs.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
-        public string Password { get; set; }
-        public string ProfilePictureRoute { get; set; }
-        public string IdTypeDocument { get; set; }
-        public string IdRol { get; set; }
+        public int IdTypeDocument { get; set; }
+        public int IdRol { get; set; }
     }
 }

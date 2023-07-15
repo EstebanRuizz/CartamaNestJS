@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parque.Persistence.DBcontext;
 
@@ -11,9 +12,11 @@ using Parque.Persistence.DBcontext;
 namespace Parque.Persistence.Migrations
 {
     [DbContext(typeof(ParqueDbContext))]
-    partial class ParqueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230715203619_User_password_min_length")]
+    partial class User_password_min_length
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -544,6 +547,11 @@ namespace Parque.Persistence.Migrations
                     b.Property<int>("IdTypeDocument")
                         .HasColumnType("int");
 
+                    b.Property<string>("IdentityDocument")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("LastModifiedBy")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -555,11 +563,6 @@ namespace Parque.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NationalIdentificationNumber")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Password")
                         .IsRequired()

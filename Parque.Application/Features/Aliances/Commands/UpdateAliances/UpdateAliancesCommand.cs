@@ -51,7 +51,6 @@ namespace Parque.Application.Features.Aliances.Commands.UpdateAliances
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
