@@ -12,8 +12,6 @@
     <Folder Include="Features\NewsPaper\" />
     <Folder Include="Features\Publications\" />
     <Folder Include="Features\Reservations\" />
-    <Folder Include="Features\TypeAliances\Commands\" />
-    <Folder Include="Features\TypeAliances\Queries\" />
     <Folder Include="Features\TypeDocuments\Queries\" />
     <Folder Include="Features\TypePublications\Commands\" />
     <Folder Include="Features\TypePublications\Queries\" />
