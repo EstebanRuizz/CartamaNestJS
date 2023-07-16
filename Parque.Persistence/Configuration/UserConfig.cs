@@ -11,7 +11,8 @@ namespace Parque.Persistence.Configuration
             builder.ToTable("Users");
             builder.HasKey(e => e.Id);
             builder.Property(p => p.NationalIdentificationNumber).HasMaxLength(30).IsRequired();
-            builder.Property(p => p.Email).HasMaxLength(150);
+            builder.Property(p => p.Email).HasMaxLength(150).IsRequired();
+            builder.HasIndex(p => p.Email).IsUnique();
             builder.Property(p => p.FirstName).HasMaxLength(100);
             builder.Property(p => p.LastName).HasMaxLength(100);
             builder.Property(p => p.Phone).HasMaxLength(15);

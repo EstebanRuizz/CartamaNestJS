@@ -40,6 +40,17 @@ namespace Parque.Application.Features.Users.Commands.CreateUsers
         {
             try
             {
+                var existingUserWithNationalIdentification = await _repository.GetAsync(u => u.NationalIdentificationNumber == request.NationalIdentificationNumber);
+                if (existingUserWithNationalIdentification != null)
+                {
+                    return new GenericResponse<int>("NationalIdentificationNumber already in use.");
+                }
+                var existingUserWithEmail = await _repository.GetAsync(u => u.Email == request.Email);
+                if (existingUserWithEmail != null)
+                {
+                    return new GenericResponse<int>("Email already in use.");
+                }
+
                 User nuevoUsuario = new User()
                 {
                     NationalIdentificationNumber = request.NationalIdentificationNumber,
