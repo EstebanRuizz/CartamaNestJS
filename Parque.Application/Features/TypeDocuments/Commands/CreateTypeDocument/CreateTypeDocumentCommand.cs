@@ -2,6 +2,7 @@
 using MediatR;
 using Parque.Application.Interfaces;
 using Parque.Application.Wrappers;
+using Parque.Domain.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,30 @@ namespace Parque.Application.Features.TypeDocuments.Commands.CreateTypeDocument
     }
     internal class CreateTypeDocumentCommandHandler : IRequestHandler<CreateTypeDocumentCommand, GenericResponse<int>>
     {
-        //private readonly IRepositoryAsync _repositoryAsync;
+        private readonly IRepositoryAsync<TypeDocument> _repositoryAsync;
         private readonly IMapper _mapper;
 
-        public Task<GenericResponse<int>> Handle(CreateTypeDocumentCommand request, CancellationToken cancellationToken)
+        public CreateTypeDocumentCommandHandler(IRepositoryAsync<TypeDocument> repositoryAsync, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _repositoryAsync = repositoryAsync;
+            _mapper = mapper;
+        }
+
+        public async Task<GenericResponse<int>> Handle(CreateTypeDocumentCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                TypeDocument newTypeDocument = _mapper.Map<CreateTypeDocumentCommand, TypeDocument>(request);
+                var typeDocumente = await _repositoryAsync.CreateAsync(newTypeDocument);
+                await _repositoryAsync.SaveChangesAsync();
+
+                return new GenericResponse<int>(typeDocumente.Id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

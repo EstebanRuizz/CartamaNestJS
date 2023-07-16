@@ -3,10 +3,19 @@ using Parque.Application.DTOs.Aliances;
 using Parque.Application.DTOs.Enviroment;
 using Parque.Application.DTOs.Publication;
 using Parque.Application.DTOs.Roles;
+using Parque.Application.DTOs.TypeAliance;
+using Parque.Application.DTOs.TypeDocument;
 using Parque.Application.DTOs.Users;
 using Parque.Application.Features.Aliances.Commands.CreateAliances;
+
 using Parque.Application.Features.Publications.Commands.CreatePublication;
 using Parque.Application.Features.Users.Commands.CreateUsers;
+
+using Parque.Application.Features.Roles.Commands.CreateRoles;
+using Parque.Application.Features.Roles.Commands.UpdateRoles;
+using Parque.Application.Features.TypeAliances.Commands.CreateTypeAliance;
+using Parque.Application.Features.TypeDocuments.Commands.CreateTypeDocument;
+
 using Parque.Domain.Entites;
 
 namespace Parque.Application.Mappings
@@ -38,6 +47,15 @@ namespace Parque.Application.Mappings
                 .ForMember(u => u.IdRol, options => options.MapFrom(origen => origen.IdRolNavigation.Name));
 
             CreateMap<Rol, RolesDTO>().ReverseMap();
+            CreateMap<CreateRolesCommand, Rol>();
+
+            CreateMap<TypeAliance, TypeAlianceDTO>().ReverseMap();
+            CreateMap<CreateTypeAlianceCommand, TypeAliance>();
+
+
+            CreateMap<TypeDocument, TypeDocumentDTO>().ReverseMap();
+            CreateMap<CreateTypeDocumentCommand, TypeDocument>().ReverseMap();
+
         }
     }
 }

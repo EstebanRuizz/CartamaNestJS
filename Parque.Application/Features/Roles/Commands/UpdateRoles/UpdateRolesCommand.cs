@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Parque.Application.DTOs.Roles;
 using Parque.Application.Interfaces;
 using Parque.Application.Wrappers;
 using Parque.Domain.Entites;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Parque.Application.Features.Roles.Commands.UpdateRoles
 {
-    public class UpdateRolesCommand: IRequest<GenericResponse<bool>>
+    public class UpdateRolesCommand: IRequest<GenericResponse<RolesDTO>>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -20,7 +21,7 @@ namespace Parque.Application.Features.Roles.Commands.UpdateRoles
         public bool IsActive { get; set; }
     }
 
-    internal class UpdateRolesCommandHandler : IRequestHandler<UpdateRolesCommand, GenericResponse<bool>>
+    internal class UpdateRolesCommandHandler : IRequestHandler<UpdateRolesCommand, GenericResponse<RolesDTO>>
     {
         private readonly IRepositoryAsync<Rol> _repositoryAsync;
         private readonly IMapper _mapper;
@@ -31,7 +32,7 @@ namespace Parque.Application.Features.Roles.Commands.UpdateRoles
             _mapper = mapper;
         }
 
-        public async Task<GenericResponse<bool>> Handle(UpdateRolesCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResponse<RolesDTO>> Handle(UpdateRolesCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace Parque.Application.Features.Roles.Commands.UpdateRoles
                 await _repositoryAsync.UpdateAsync(role);
                 await _repositoryAsync.SaveChangesAsync();
 
-                return new GenericResponse<bool>(true);
+                return new GenericResponse<RolesDTO>(_mapper.Map<RolesDTO>(role));
             }
             catch (Exception)
             {
