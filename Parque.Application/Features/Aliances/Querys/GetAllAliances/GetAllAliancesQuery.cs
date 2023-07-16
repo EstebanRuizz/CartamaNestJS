@@ -30,11 +30,9 @@ namespace Parque.Application.Features.Aliances.Querys.GetAllAliances
                 var aliances = await _aliancesRepository.GetAllAliances();
 
                 return new GenericResponse<List<AliancesDTO>>(_mapper.Map<List<AliancesDTO>>(aliances));
-
             }
             catch (Exception)
             {
-
                 throw;
             }
 

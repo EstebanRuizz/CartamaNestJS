@@ -10,7 +10,6 @@
     <Folder Include="Features\Enviromments\Commands\Create\" />
     <Folder Include="Features\Inscriptions\" />
     <Folder Include="Features\NewsPaper\" />
-    <Folder Include="Features\Publications\" />
     <Folder Include="Features\Reservations\" />
     <Folder Include="Features\TypeAliances\Commands\" />
     <Folder Include="Features\TypeAliances\Queries\" />

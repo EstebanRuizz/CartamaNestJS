@@ -4,12 +4,11 @@ namespace Parque.Application.Exceptions
 {
     public class ValidationException : Exception
     {
+        public List<string> Errors { get; }
         public ValidationException() : base("One or more errors of validation")
         {
             Errors = new List<string>();
         }
-
-
         public ValidationException(IEnumerable<ValidationFailure> failures) : this()
         {
             foreach (var item in failures)
@@ -17,6 +16,9 @@ namespace Parque.Application.Exceptions
                 Errors.Add(item.ErrorMessage);
             }
         }
-        public List<string> Errors { get; }
+        public ValidationException(IEnumerable<string> errors) : this()
+        {
+            Errors.AddRange(errors);
+        }
     }
 }
