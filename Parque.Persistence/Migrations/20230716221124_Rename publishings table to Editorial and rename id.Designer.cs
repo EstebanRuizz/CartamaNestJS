@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parque.Persistence.DBcontext;
 
@@ -11,9 +12,11 @@ using Parque.Persistence.DBcontext;
 namespace Parque.Persistence.Migrations
 {
     [DbContext(typeof(ParqueDbContext))]
-    partial class ParqueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230716221124_Rename publishings table to Editorial and rename id")]
+    partial class RenamepublishingstabletoEditorialandrenameid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,6 +112,39 @@ namespace Parque.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DocumentRoutes", (string)null);
+                });
+
+            modelBuilder.Entity("Parque.Domain.Entites.Editorial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Editorial", (string)null);
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Enviroment", b =>
@@ -218,7 +254,7 @@ namespace Parque.Persistence.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("IdPublishingHouse")
+                    b.Property<int>("IdEditorial")
                         .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
@@ -235,7 +271,7 @@ namespace Parque.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPublishingHouse");
+                    b.HasIndex("IdEditorial");
 
                     b.ToTable("NewsPapers", (string)null);
                 });
@@ -289,39 +325,6 @@ namespace Parque.Persistence.Migrations
                     b.HasIndex("IdTypeOfPulblication");
 
                     b.ToTable("Publication", (string)null);
-                });
-
-            modelBuilder.Entity("Parque.Domain.Entites.PublishingHouse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PublishingHouse", (string)null);
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Reservation", b =>
@@ -620,13 +623,13 @@ namespace Parque.Persistence.Migrations
 
             modelBuilder.Entity("Parque.Domain.Entites.NewsPaper", b =>
                 {
-                    b.HasOne("Parque.Domain.Entites.PublishingHouse", "IdPublishingHouseNavigation")
+                    b.HasOne("Parque.Domain.Entites.Editorial", "IdEditorialNavigation")
                         .WithMany("NewsPapers")
-                        .HasForeignKey("IdPublishingHouse")
+                        .HasForeignKey("IdEditorial")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdPublishingHouseNavigation");
+                    b.Navigation("IdEditorialNavigation");
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Publication", b =>
@@ -678,6 +681,11 @@ namespace Parque.Persistence.Migrations
                     b.Navigation("IdTypeDocumentNavigation");
                 });
 
+            modelBuilder.Entity("Parque.Domain.Entites.Editorial", b =>
+                {
+                    b.Navigation("NewsPapers");
+                });
+
             modelBuilder.Entity("Parque.Domain.Entites.Enviroment", b =>
                 {
                     b.Navigation("Reservations");
@@ -686,11 +694,6 @@ namespace Parque.Persistence.Migrations
             modelBuilder.Entity("Parque.Domain.Entites.Publication", b =>
                 {
                     b.Navigation("Inscriptions");
-                });
-
-            modelBuilder.Entity("Parque.Domain.Entites.PublishingHouse", b =>
-                {
-                    b.Navigation("NewsPapers");
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Rol", b =>

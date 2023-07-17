@@ -17,6 +17,10 @@ using Parque.Application.Features.TypeAliances.Commands.CreateTypeAliance;
 using Parque.Application.Features.TypeDocuments.Commands.CreateTypeDocument;
 
 using Parque.Domain.Entites;
+using Parque.Application.DTOs.TypePublications;
+using Parque.Application.Features.TypePublications.Commands.CreateTypePublications;
+using Parque.Application.Features.PublishingHouses.Commands.CreatePublishingHouses;
+using Parque.Application.DTOs.PublishingHouse;
 
 namespace Parque.Application.Mappings
 {
@@ -55,6 +59,12 @@ namespace Parque.Application.Mappings
 
             CreateMap<TypeDocument, TypeDocumentDTO>().ReverseMap();
             CreateMap<CreateTypeDocumentCommand, TypeDocument>().ReverseMap();
+
+            CreateMap<TypePublication, TypePublicationsDTO>().ReverseMap();
+            CreateMap<CreateTypePublicationsCommand, TypePublication>();
+
+            CreateMap<PublishingHouse, PublishingHouseDTO>().ReverseMap();
+            CreateMap<CreatePublishingHousesCommand, PublishingHouse>();
 
         }
     }
