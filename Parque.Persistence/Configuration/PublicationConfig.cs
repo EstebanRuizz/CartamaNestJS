@@ -14,7 +14,7 @@ namespace Parque.Persistence.Configuration
             builder.Property(p => p.HasForm).IsRequired();
             builder.Property(p => p.Description).HasMaxLength(255).IsRequired();
             builder.Property(p => p.ImageRoute).HasMaxLength(300).IsRequired();
-            builder.HasOne(p => p.IdTypePublicationNavigation).WithMany(p => p.Publications).HasForeignKey(p => p.IdTypeOfPulblication).HasPrincipalKey(p => p.Id);
+            builder.HasOne(p => p.IdTypePublicationNavigation).WithMany(p => p.Publications).HasForeignKey(p => p.idTypeOfPublication).HasPrincipalKey(p => p.Id);
             builder.Property(p => p.CreatedBy).HasMaxLength(30);
             builder.Property(p => p.LastModifiedBy).HasMaxLength(30);
         }

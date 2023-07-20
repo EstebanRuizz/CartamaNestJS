@@ -16,7 +16,7 @@ namespace Parque.Application.Features.Publications.Commands.CreatePublication
     {
         public string Title { get; set; }
         public bool HasForm { get; set; }
-        public int IdTypeOfPulblication { get; set; }
+        public int IdTypeOfPublication { get; set; }
         public string Description { get; set; }
         public string ImageRoute { get; set; }
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parque.Persistence.DBcontext;
 
@@ -11,9 +12,11 @@ using Parque.Persistence.DBcontext;
 namespace Parque.Persistence.Migrations
 {
     [DbContext(typeof(ParqueDbContext))]
-    partial class ParqueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230720190218_Publication_idTypeOfPublication_typo")]
+    partial class Publication_idTypeOfPublication_typo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,7 +221,7 @@ namespace Parque.Persistence.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("IdPublishingHouse")
+                    b.Property<int>("IdPublishing")
                         .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
@@ -235,7 +238,7 @@ namespace Parque.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPublishingHouse");
+                    b.HasIndex("IdPublishing");
 
                     b.ToTable("NewsPapers", (string)null);
                 });
@@ -291,7 +294,7 @@ namespace Parque.Persistence.Migrations
                     b.ToTable("Publication", (string)null);
                 });
 
-            modelBuilder.Entity("Parque.Domain.Entites.PublishingHouse", b =>
+            modelBuilder.Entity("Parque.Domain.Entites.Publishing", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -321,7 +324,7 @@ namespace Parque.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PublishingHouse", (string)null);
+                    b.ToTable("Publishings", (string)null);
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Reservation", b =>
@@ -620,13 +623,13 @@ namespace Parque.Persistence.Migrations
 
             modelBuilder.Entity("Parque.Domain.Entites.NewsPaper", b =>
                 {
-                    b.HasOne("Parque.Domain.Entites.PublishingHouse", "IdPublishingHouseNavigation")
+                    b.HasOne("Parque.Domain.Entites.Publishing", "IdPublishingNavigation")
                         .WithMany("NewsPapers")
-                        .HasForeignKey("IdPublishingHouse")
+                        .HasForeignKey("IdPublishing")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdPublishingHouseNavigation");
+                    b.Navigation("IdPublishingNavigation");
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Publication", b =>
@@ -688,7 +691,7 @@ namespace Parque.Persistence.Migrations
                     b.Navigation("Inscriptions");
                 });
 
-            modelBuilder.Entity("Parque.Domain.Entites.PublishingHouse", b =>
+            modelBuilder.Entity("Parque.Domain.Entites.Publishing", b =>
                 {
                     b.Navigation("NewsPapers");
                 });
