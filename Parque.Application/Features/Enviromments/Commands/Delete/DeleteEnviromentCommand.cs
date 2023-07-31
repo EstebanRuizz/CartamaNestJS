@@ -26,12 +26,13 @@ namespace Parque.Application.Features.Enviromments.Commands.Delete
         {
             try
             {
-                Enviroment entity = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
+                Enviroment enviroment = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
+                if (enviroment == null)
+                    throw new KeyNotFoundException($"The environment with id {request.Id} does not exist");
 
-                bool result = await _repositoryAsync.DeleteAsync(entity);
+                bool result = await _repositoryAsync.DeleteAsync(enviroment);
                 await _repositoryAsync.SaveChangesAsync();
                 return new GenericResponse<bool>(result);
-
             }
             catch (Exception)
             {

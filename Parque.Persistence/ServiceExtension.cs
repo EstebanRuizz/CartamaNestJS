@@ -16,7 +16,6 @@ namespace Parque.Persistence
 
             #region Repositories
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(GenericRepository<>));
-            services.AddTransient<IAliancesRepository, AliancesRepository>();
             #endregion
 
 

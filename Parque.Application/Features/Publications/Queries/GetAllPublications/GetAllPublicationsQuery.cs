@@ -14,6 +14,9 @@ namespace Parque.Application.Features.Publications.Queries.GetAllPublications
 {
     public class GetAllPublicationsQuery : IRequest<GenericResponse<List<ListPublicationDTO>>>
     {
+        public int Limit { get; set; }
+        public int Offset { get; set; }
+
     }
     internal class GetAllPublicationsQueryHandler : IRequestHandler<GetAllPublicationsQuery, GenericResponse<List<ListPublicationDTO>>>
     {
@@ -28,9 +31,9 @@ namespace Parque.Application.Features.Publications.Queries.GetAllPublications
 
         public async Task<GenericResponse<List<ListPublicationDTO>>> Handle(GetAllPublicationsQuery request, CancellationToken cancellationToken)
         {
-            var publications = await _repositoryAsync.GetAllAsync();
-            var ListPublications = _mapper.Map<List<ListPublicationDTO>>(publications);
-
+            var publications = await _repositoryAsync.GetAllAsync(includeProperties: $"{nameof(Publication.IdTypePublicationNavigation)}");
+            var pagination = publications.Skip(request.Offset).Take(request.Limit);
+            var ListPublications = _mapper.Map<List<ListPublicationDTO>>(pagination);
             return new GenericResponse<List<ListPublicationDTO>>(ListPublications);
         }
     }

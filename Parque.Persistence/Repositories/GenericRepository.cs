@@ -43,11 +43,15 @@ namespace Parque.Persistence.Repositories
             }
 
         }
-        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filtro)
+        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filtro, string includeProperties)
         {
             try
             {
                 IQueryable<T> queryEntidad = filtro == null ? _context.Set<T>() : _context.Set<T>().Where(filtro);
+                foreach (var includeProperty in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    queryEntidad = queryEntidad.Include(includeProperty);
+                }
                 return queryEntidad;
             }
             catch (Exception)
@@ -56,14 +60,16 @@ namespace Parque.Persistence.Repositories
                 throw;
             }
         }
-
-
-        public async Task<T> GetAsync(Expression<Func<T, bool>> filtro)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filtro, string includeProperties = "")
         {
             try
             {
-                var entidad = await _context.Set<T>().FirstOrDefaultAsync(filtro);
-                return entidad;
+                IQueryable<T> entidad =  _context.Set<T>();
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    entidad = entidad.Include(includeProperty);
+                }
+                return await entidad.FirstOrDefaultAsync(filtro);    
             }
             catch (Exception)
             {
@@ -71,12 +77,13 @@ namespace Parque.Persistence.Repositories
                 throw;
             }
         }
-        public async Task<bool> UpdateAsync(T entity)
+
+        public async Task<T> UpdateAsync(T entity)
         {
             try
             {
                 _context.Set<T>().Update(entity);
-                return true;
+                return  entity;
             }
             catch (Exception)
             {
@@ -84,6 +91,7 @@ namespace Parque.Persistence.Repositories
                 throw;
             }
         }
+
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             try

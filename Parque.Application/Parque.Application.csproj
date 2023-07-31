@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Enviromments\Commands\Create\" />
-    <Folder Include="Features\Inscriptions\" />
-    <Folder Include="Features\NewsPaper\" />
-    <Folder Include="Features\Reservations\" />
     <Folder Include="Filters\" />
   </ItemGroup>
 

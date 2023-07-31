@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
+using Parque.Application.DTOs.Aliances;
 using Parque.Application.Interfaces;
 using Parque.Application.Wrappers;
 using Parque.Domain.Entites;
 
 namespace Parque.Application.Features.Aliances.Commands.UpdateAliances
 {
-    public class UpdateAliancesCommand : IRequest<GenericResponse<bool>>
+    public class UpdateAliancesCommand : IRequest<GenericResponse<AliancesDTO>>
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime AlianceDate { get; set; }
+        public string AlianceDate { get; set; }
+        public string DocumentRoute { get; set; }
         public int IdTypeAliance { get; set; }
 
     }
-
-
-    public class UpdateAliancesCommandHandler : IRequestHandler<UpdateAliancesCommand, GenericResponse<bool>>
+    internal class UpdateAliancesCommandHandler : IRequestHandler<UpdateAliancesCommand, GenericResponse<AliancesDTO>>
     {
         private readonly IRepositoryAsync<Aliance> _repositoryAsync;
         private readonly IMapper _mapper;
@@ -28,26 +28,27 @@ namespace Parque.Application.Features.Aliances.Commands.UpdateAliances
             _repositoryAsync = repositoryAsync;
         }
 
-        public async Task<GenericResponse<bool>> Handle(UpdateAliancesCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResponse<AliancesDTO>> Handle(UpdateAliancesCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var alianza = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
+                var aliance = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
 
-                if (alianza == null)
+                if (aliance == null)
                     throw new KeyNotFoundException($"Alinaza con el id: {request.Id} no existe");
 
+                aliance.Description = request.Description;
+                aliance.AlianceDate = request.AlianceDate.ToString();
+                aliance.Name = request.Name;
+                aliance.IdTypeAliance = request.IdTypeAliance;
+                aliance.DocumentRoute = request.DocumentRoute;
 
-                alianza.Description = request.Description;
-                alianza.AlianceDate = request.AlianceDate.ToString();
-                alianza.Name = request.Name;
-
-                await _repositoryAsync.UpdateAsync(alianza);
+                await _repositoryAsync.UpdateAsync(aliance);
                 await _repositoryAsync.SaveChangesAsync();
 
-                return new GenericResponse<bool>(true);
+                var getAliance = await _repositoryAsync.GetAsync(p => p.Id == request.Id, includeProperties: $"{nameof(Aliance.IdTypeAliancesNavigation)}");
 
-
+                return new GenericResponse<AliancesDTO>(_mapper.Map<AliancesDTO>(getAliance));
             }
             catch (Exception)
             {

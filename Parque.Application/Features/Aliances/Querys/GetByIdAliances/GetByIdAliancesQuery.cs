@@ -10,7 +10,6 @@ namespace Parque.Application.Features.Aliances.Querys.GetByIdAliances
     public class GetByIdAliancesQuery : IRequest<GenericResponse<AliancesDTO>>
     {
         public int Id { get; set; }
-
     }
 
     public class GetByIdAliancesQueryHandler : IRequestHandler<GetByIdAliancesQuery, GenericResponse<AliancesDTO>>
@@ -27,12 +26,12 @@ namespace Parque.Application.Features.Aliances.Querys.GetByIdAliances
         {
             try
             {
-                var alianza = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
+                var alince = await _repositoryAsync.GetAsync(p => p.Id == request.Id, includeProperties: $"{nameof(Aliance.IdTypeAliancesNavigation)}");
 
-                if (alianza == null)
-                    throw new KeyNotFoundException($"Alinaza con el id: {request.Id} no existe");
+                if (alince == null)
+                    throw new KeyNotFoundException($"Alianza con el id: {request.Id} no existe");
 
-                return new GenericResponse<AliancesDTO>(_mapper.Map<AliancesDTO>(alianza));
+                return new GenericResponse<AliancesDTO>(_mapper.Map<AliancesDTO>(alince));
 
             }
             catch (Exception)

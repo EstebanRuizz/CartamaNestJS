@@ -15,7 +15,7 @@ namespace Parque.Application.DTOs.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
-        public int IdTypeDocument { get; set; }
-        public int IdRol { get; set; }
+        public string IdTypeDocument { get; set; }
+        public string IdRol { get; set; }
     }
 }
