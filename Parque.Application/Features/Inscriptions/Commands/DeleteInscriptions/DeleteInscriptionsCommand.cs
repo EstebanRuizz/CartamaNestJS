@@ -33,7 +33,7 @@ namespace Parque.Application.Features.Inscriptions.Commands.DeleteInscriptions
             {
                 var inscription = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
                 if (inscription == null)
-                    throw new KeyNotFoundException($"Inscripción con el id: {request.Id} no existe");
+                    throw new KeyNotFoundException($"Inscription with id: {request.Id} does not exist");
 
                 await _repositoryAsync.DeleteAsync(inscription);
                 await _repositoryAsync.SaveChangesAsync();

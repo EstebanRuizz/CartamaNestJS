@@ -1,4 +1,4 @@
-﻿    using AutoMapper;
+﻿using AutoMapper;
 using Parque.Application.DTOs.Aliances;
 using Parque.Application.DTOs.Enviroment;
 using Parque.Application.DTOs.Publication;
@@ -42,8 +42,11 @@ namespace Parque.Application.Mappings
             CreateMap<CreateEnviromentCommand, Enviroment>();
 
             CreateMap<Inscription, InscriptionDTO>()
-                .ForMember(p => p.NameUser, options => options.MapFrom(origen => origen.IdUserNavigation.FirstName))
-                .ForMember(p => p.NamePublication, options => options.MapFrom(origen => origen.IdPublicationNavigation.Title));
+                .ForMember(p => p.NameUser, options => options.MapFrom(origen => origen.IdUserNavigation.FullName))
+                .ForMember(p => p.IdUser, options => options.MapFrom(origen => origen.IdUserNavigation.Id))
+                .ForMember(p => p.NationalIdentificationNumberUser, options => options.MapFrom(origen => origen.IdUserNavigation.NationalIdentificationNumber))
+                .ForMember(p => p.NamePublication, options => options.MapFrom(origen => origen.IdPublicationNavigation.Title))
+                .ForMember(p => p.IdPublication, options => options.MapFrom(origen => origen.IdPublicationNavigation.Id));
             CreateMap<CreateInscriptionsCommand, Inscription>();
 
             CreateMap<NewsPaper, NewsPaperDTO>()
@@ -60,7 +63,7 @@ namespace Parque.Application.Mappings
 
             CreateMap<Reservation, ReservationDTO>()
                 .ForMember(p => p.IdEnviroment, options => options.MapFrom(origen => origen.IdEnvironmentNavigation.Title))
-                .ForMember(p => p.IdUser, options => options.MapFrom(origen => origen.IdUserNavigation.FirstName));
+                .ForMember(p => p.IdUser, options => options.MapFrom(origen => origen.IdUserNavigation.FullName));
             CreateMap<CreateReservationsCommand, Reservation>();
 
             CreateMap<Rol, RolesDTO>().ReverseMap();

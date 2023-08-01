@@ -35,9 +35,11 @@ namespace Parque.Application.Features.Inscriptions.Commands.CreateInscriptions
             try
             {
                 Inscription inscription = _mapper.Map<CreateInscriptionsCommand, Inscription>(request);
-
                 var newInscription = await _repositoryAsync.CreateAsync(inscription);
                 await _repositoryAsync.SaveChangesAsync();
+
+                var getInscription = await _repositoryAsync.GetAsync(p => p.Id == newInscription.Id, includeProperties: $"{nameof(Inscription.IdPublicationNavigation)},{nameof(Inscription.IdUserNavigation)}");
+
                 return new GenericResponse<InscriptionDTO>(_mapper.Map<InscriptionDTO>(newInscription));
             }
             catch (Exception)

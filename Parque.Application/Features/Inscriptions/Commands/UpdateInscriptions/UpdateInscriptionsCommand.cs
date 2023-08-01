@@ -37,7 +37,7 @@ namespace Parque.Application.Features.Inscriptions.Commands.UpdateInscriptions
             {
                 var inscription = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
                 if (inscription == null)
-                    throw new KeyNotFoundException($"Inscripción con el id: {request.Id} no existe");
+                    throw new KeyNotFoundException($"Inscription with id: {request.Id} does not exist");
 
                 inscription.IdUser = request.IdUser; 
                 inscription.IdPublication = request.IdPublication;
@@ -46,7 +46,9 @@ namespace Parque.Application.Features.Inscriptions.Commands.UpdateInscriptions
                 await _repositoryAsync.UpdateAsync(inscription);
                 await _repositoryAsync.SaveChangesAsync();
 
-                return new GenericResponse<InscriptionDTO>(_mapper.Map<InscriptionDTO>(inscription));
+                var getInscription = await _repositoryAsync.GetAsync(p => p.Id == request.Id, includeProperties: $"{nameof(Inscription.IdPublicationNavigation)},{nameof(Inscription.IdUserNavigation)}");
+
+                return new GenericResponse<InscriptionDTO>(_mapper.Map<InscriptionDTO>(getInscription));
 
             }
             catch (Exception)

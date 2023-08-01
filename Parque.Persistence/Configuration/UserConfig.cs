@@ -13,8 +13,7 @@ namespace Parque.Persistence.Configuration
             builder.Property(p => p.NationalIdentificationNumber).HasMaxLength(30).IsRequired();
             builder.Property(p => p.Email).HasMaxLength(150).IsRequired();
             builder.HasIndex(p => p.Email).IsUnique();
-            builder.Property(p => p.FirstName).HasMaxLength(100);
-            builder.Property(p => p.LastName).HasMaxLength(100);
+            builder.Property(p => p.FullName).HasMaxLength(250).IsRequired();
             builder.Property(p => p.Phone).HasMaxLength(15);
             builder.Property(p => p.Password).HasMaxLength(120).IsRequired();
             builder.Property(p => p.ProfilePictureRoute).HasMaxLength(300);

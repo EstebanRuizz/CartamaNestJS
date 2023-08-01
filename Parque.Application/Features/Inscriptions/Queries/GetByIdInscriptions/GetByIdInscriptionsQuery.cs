@@ -32,9 +32,10 @@ namespace Parque.Application.Features.Inscriptions.Queries.GetByIdInscriptions
         {
             try
             {
-                var inscription = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
+                var inscription = await _repositoryAsync.GetAsync(p => p.Id == request.Id, includeProperties: $"{nameof(Inscription.IdPublicationNavigation)},{nameof(Inscription.IdUserNavigation)}");
+
                 if (inscription == null)
-                    throw new KeyNotFoundException($"Inscripción con el id: {request.Id} no existe");
+                    throw new KeyNotFoundException($"Inscription with id: {request.Id} does not exist");
 
                 return new GenericResponse<InscriptionDTO>(_mapper.Map<InscriptionDTO>(inscription));
             }
