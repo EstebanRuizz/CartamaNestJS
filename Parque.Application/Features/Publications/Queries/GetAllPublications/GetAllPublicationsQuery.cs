@@ -33,8 +33,7 @@ namespace Parque.Application.Features.Publications.Queries.GetAllPublications
         {
             var publications = await _repositoryAsync.GetAllAsync(includeProperties: $"{nameof(Publication.IdTypePublicationNavigation)}");
             var pagination = publications.Skip(request.Offset).Take(request.Limit);
-            var ListPublications = _mapper.Map<List<ListPublicationDTO>>(pagination);
-            return new GenericResponse<List<ListPublicationDTO>>(ListPublications);
+            return new GenericResponse<List<ListPublicationDTO>>(_mapper.Map<List<ListPublicationDTO>>(pagination.ToList()));
         }
     }
 }

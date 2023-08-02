@@ -31,7 +31,7 @@ namespace Parque.Application.Features.Publications.Commands.DeletePublication
             {
                 var publication = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
                 if (publication == null)
-                    throw new KeyNotFoundException($"Publicación con el id: {request.Id} no existe");
+                    throw new KeyNotFoundException($"Publication with id: {request.Id} does not exist");
 
                 await _repositoryAsync.DeleteAsync(publication);
                 await _repositoryAsync.SaveChangesAsync();

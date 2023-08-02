@@ -50,11 +50,13 @@ namespace Parque.Application.Mappings
             CreateMap<CreateInscriptionsCommand, Inscription>();
 
             CreateMap<NewsPaper, NewsPaperDTO>()
-                .ForMember(p => p.PublishingHouse, options => options.MapFrom(origen => origen.IdPublishingHouseNavigation.Name));
+                .ForMember(p => p.IdPublishingHouse, options => options.MapFrom(origen => origen.IdPublishingHouseNavigation.Id))
+                .ForMember(p => p.NamePublishingHouse, options => options.MapFrom(origen => origen.IdPublishingHouseNavigation.Name));
             CreateMap<CreateNewsPapersCommand, NewsPaper>();
 
             CreateMap<Publication, ListPublicationDTO>()
-                .ForMember(publication => publication.TypeOfPulblication, options => options.MapFrom(origin => origin.IdTypePublicationNavigation.Name));
+                .ForMember(publication => publication.IdTypeOfPublication, options => options.MapFrom(origin => origin.IdTypePublicationNavigation.Id))
+                .ForMember(publication => publication.NameTypePulblication, options => options.MapFrom(origin => origin.IdTypePublicationNavigation.Name));
             CreateMap<Publication, CreatePublicationCommand>();
             CreateMap<CreatePublicationCommand, Publication>();
 

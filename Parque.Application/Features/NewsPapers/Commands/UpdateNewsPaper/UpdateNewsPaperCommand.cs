@@ -16,7 +16,7 @@ namespace Parque.Application.Features.NewsPapers.Commands.UpdateNewsPaper
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public int PublishingHouse { get; set; }
+        public int IdPublishingHouse { get; set; }
         public string DocumentRoute { get; set; }
     }
 
@@ -37,16 +37,18 @@ namespace Parque.Application.Features.NewsPapers.Commands.UpdateNewsPaper
             {
                 var newPaper = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
                 if (newPaper == null)
-                    throw new KeyNotFoundException($"Periodico con el id: {request.Id} no existe");
+                    throw new KeyNotFoundException($"Newspaper with id: {request.Id} does not exist");
 
                 newPaper.Title = request.Title;
-                newPaper.IdPublishingHouse = request.PublishingHouse; 
+                newPaper.IdPublishingHouse = request.IdPublishingHouse; 
                 newPaper.DocumentRoute = request.DocumentRoute;
 
                 await _repositoryAsync.UpdateAsync(newPaper);
                 await _repositoryAsync.SaveChangesAsync();
 
-                return new GenericResponse<NewsPaperDTO>(_mapper.Map<NewsPaperDTO>(newPaper));
+                var getNewspaper = await _repositoryAsync.GetAsync(p => p.Id == request.Id, includeProperties: $"{nameof(NewsPaper.IdPublishingHouseNavigation)}");
+
+                return new GenericResponse<NewsPaperDTO>(_mapper.Map<NewsPaperDTO>(getNewspaper));
             }
             catch (Exception)
             {

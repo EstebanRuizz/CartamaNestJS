@@ -32,10 +32,12 @@ namespace Parque.Application.Features.NewsPapers.Queries.GetByIdNewsPapers
         {
             try
             {
-                var newPaper = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
-                if (newPaper == null)
-                    throw new KeyNotFoundException($"Periodico con el id: {request.Id} no existe");
-                return new GenericResponse<NewsPaperDTO>(_mapper.Map<NewsPaperDTO>(newPaper));
+                var getNewspaper = await _repositoryAsync.GetAsync(p => p.Id == request.Id, includeProperties: $"{nameof(NewsPaper.IdPublishingHouseNavigation)}");
+
+                if (getNewspaper == null)
+                    throw new KeyNotFoundException($"Newspaper with id: {request.Id} does not exist");
+
+                return new GenericResponse<NewsPaperDTO>(_mapper.Map<NewsPaperDTO>(getNewspaper));
             }
             catch (Exception)
             {

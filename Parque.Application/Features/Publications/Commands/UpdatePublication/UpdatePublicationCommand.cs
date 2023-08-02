@@ -39,7 +39,7 @@ namespace Parque.Application.Features.Publications.Commands.UpdatePublication
             {
                 var publication = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
                 if (publication == null)
-                    throw new KeyNotFoundException($"Publicación con el id: {request.Id} no existe");
+                    throw new KeyNotFoundException($"Publication with id: {request.Id} does not exist");
 
                 publication.Title = request.Title;
                 publication.HasForm = request.HasForm;

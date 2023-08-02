@@ -31,11 +31,11 @@ namespace Parque.Application.Features.NewsPapers.Commands.DeleteNewsPaper
         {
             try
             {
-                var newPaper = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
-                if (newPaper == null)
-                    throw new KeyNotFoundException($"Periodico con el id: {request.Id} no existe");
+                var newspaper = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
+                if (newspaper == null)
+                    throw new KeyNotFoundException($"Newspaper with id: {request.Id} does not exist");
 
-                await _repositoryAsync.DeleteAsync(newPaper);
+                await _repositoryAsync.DeleteAsync(newspaper);
                 await _repositoryAsync.SaveChangesAsync();  
                 return new GenericResponse<bool>(true);
             }

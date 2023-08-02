@@ -15,7 +15,7 @@ namespace Parque.Application.Features.NewsPapers.Commands.CreateNewsPapers
     public class CreateNewsPapersCommand : IRequest<GenericResponse<NewsPaperDTO>>
     {
         public string Title { get; set; }
-        public int PublishingHouse { get; set; }
+        public int IdPublishingHouse { get; set; }
         public string DocumentRoute { get; set; }
     }
 
@@ -34,11 +34,13 @@ namespace Parque.Application.Features.NewsPapers.Commands.CreateNewsPapers
         {
             try
             {
-                NewsPaper newNewsPaper = _mapper.Map<CreateNewsPapersCommand, NewsPaper>(request);
-                var newsPaper = await _repositoryAsync.CreateAsync(newNewsPaper);
+                NewsPaper newsPaper = _mapper.Map<CreateNewsPapersCommand, NewsPaper>(request);
+                var newNewsPaper = await _repositoryAsync.CreateAsync(newsPaper);
                 await _repositoryAsync.SaveChangesAsync();
 
-                return new GenericResponse<NewsPaperDTO>(_mapper.Map<NewsPaperDTO>(newsPaper));
+                var getNewspaper = await _repositoryAsync.GetAsync(p => p.Id == newNewsPaper.Id, includeProperties: $"{nameof(NewsPaper.IdPublishingHouseNavigation)}");
+
+                return new GenericResponse<NewsPaperDTO>(_mapper.Map<NewsPaperDTO>(getNewspaper));
             }
             catch (Exception)
             {

@@ -35,7 +35,7 @@ namespace Parque.Application.Features.Publications.Queries.GetByIdPublication
                 var publication = await _repositoryAsync.GetAsync(p => p.Id == request.Id, includeProperties: $"{nameof(Publication.IdTypePublicationNavigation)}");
 
                 if (publication == null)
-                    throw new KeyNotFoundException($"Publicación con el id: {request.Id} no existe");
+                    throw new KeyNotFoundException($"Publication with id: {request.Id} does not exist");
 
                 return new GenericResponse<ListPublicationDTO>(_mapper.Map<ListPublicationDTO>(publication));
             }

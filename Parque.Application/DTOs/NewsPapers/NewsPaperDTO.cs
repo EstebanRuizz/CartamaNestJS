@@ -10,7 +10,8 @@ namespace Parque.Application.DTOs.NewsPapers
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public int PublishingHouse { get; set; }
+        public int IdPublishingHouse { get; set; }
+        public string NamePublishingHouse { get; set; }
         public string DocumentRoute { get; set; }
     }
 }

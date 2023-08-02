@@ -31,8 +31,8 @@ namespace Parque.Application.Features.NewsPapers.Queries.GetAllNewsPapers
         {
             try
             {
-                var newsPapers = await _repositoryAsync.GetAllAsync();
-                return new GenericResponse<List<NewsPaperDTO>>(_mapper.Map<List<NewsPaperDTO>>(newsPapers));
+                var getNewspaper = await _repositoryAsync.GetAllAsync(includeProperties: $"{nameof(NewsPaper.IdPublishingHouseNavigation)}");
+                return new GenericResponse<List<NewsPaperDTO>>(_mapper.Map<List<NewsPaperDTO>>(getNewspaper.ToList()));
             }
             catch (Exception)
             {

@@ -36,11 +36,12 @@ namespace Parque.Application.Features.Publications.Commands.CreatePublication
             try
             {
                 Publication publication = _mapper.Map<CreatePublicationCommand, Publication>(request);
-                
                 var newPublication = await _repositoryAsync.CreateAsync(publication);
                 await _repositoryAsync.SaveChangesAsync();
 
-                return new GenericResponse<ListPublicationDTO>(_mapper.Map<ListPublicationDTO>(newPublication));
+                var getPublication = await _repositoryAsync.GetAsync(p => p.Id == newPublication.Id, includeProperties: $"{nameof(Publication.IdTypePublicationNavigation)}");  
+
+                return new GenericResponse<ListPublicationDTO>(_mapper.Map<ListPublicationDTO>(getPublication));
             }
             catch (Exception)
             {
