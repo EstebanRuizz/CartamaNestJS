@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using Parque.Application.DTOs.TypePublications;
 using Parque.Application.Interfaces;
@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Parque.Application.Features.TypePublications.Commands.CreateTypePublications
 {
+
     public class CreateTypePublicationsCommand : IRequest<GenericResponse<TypePublicationsDTO>>
     {        
         public string Name { get; set; }
@@ -45,5 +46,4 @@ namespace Parque.Application.Features.TypePublications.Commands.CreateTypePublic
                 throw;
             }
         }
-    }
 }
