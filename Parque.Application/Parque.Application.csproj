@@ -7,19 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Enviromments\Commands\Create\" />
-    <Folder Include="Features\Inscriptions\" />
-    <Folder Include="Features\NewsPaper\" />
-    <Folder Include="Features\Publications\" />
-    <Folder Include="Features\Reservations\" />
-    <Folder Include="Features\Roles\Commands\" />
-    <Folder Include="Features\Roles\Queries\" />
-    <Folder Include="Features\TypeAliances\Commands\" />
-    <Folder Include="Features\TypeAliances\Queries\" />
-    <Folder Include="Features\TypeDocuments\Commands\" />
-    <Folder Include="Features\TypeDocuments\Queries\" />
-    <Folder Include="Features\TypePublications\Commands\" />
-    <Folder Include="Features\TypePublications\Queries\" />
     <Folder Include="Filters\" />
   </ItemGroup>
 

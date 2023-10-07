@@ -8,6 +8,7 @@ namespace Parque.Application.DTOs.TypeAliance
 {
     public class TypeAlianceDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

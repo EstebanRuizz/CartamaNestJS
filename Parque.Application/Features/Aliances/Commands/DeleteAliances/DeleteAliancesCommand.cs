@@ -24,16 +24,12 @@ namespace Parque.Application.Features.Aliances.Commands.DeleteAliances
             try
             {
                 var alianza = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
-
                 if (alianza == null)
                     throw new KeyNotFoundException($"Alinaza con el id: {request.Id} no existe");
 
-
                 await _repositoryAsync.DeleteAsync(alianza);
                 await _repositoryAsync.SaveChangesAsync();
-
                 return new GenericResponse<bool>(true);
-
             }
             catch (Exception)
             {

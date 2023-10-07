@@ -28,21 +28,11 @@ namespace Parque.Application.Features.Enviromments.Commands.Create
 
         public async Task<GenericResponse<EnviromentDTO>> Handle(CreateEnviromentCommand request, CancellationToken cancellationToken)
         {
-
-
-            Enviroment entity = new Enviroment()
-            {
-                Title = request.Title,
-                Description = request.Description,
-                DocumentRoute = request.DocumentRoute
-            };
-
-            var dto = _mapper.Map<EnviromentDTO>(await _repository.CreateAsync(entity));
+            Enviroment enviroment = _mapper.Map<CreateEnviromentCommand, Enviroment>(request);
+            var newEnviroment = await _repository.CreateAsync(enviroment);
             await _repository.SaveChangesAsync();
 
-            return new GenericResponse<EnviromentDTO>(dto);
-
-
+            return new GenericResponse<EnviromentDTO>(_mapper.Map<EnviromentDTO>(newEnviroment));
         }
     }
 }

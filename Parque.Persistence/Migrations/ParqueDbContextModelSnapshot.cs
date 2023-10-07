@@ -218,7 +218,7 @@ namespace Parque.Persistence.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("IdPublishing")
+                    b.Property<int>("IdPublishingHouse")
                         .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
@@ -235,7 +235,7 @@ namespace Parque.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPublishing");
+                    b.HasIndex("IdPublishingHouse");
 
                     b.ToTable("NewsPapers", (string)null);
                 });
@@ -264,9 +264,6 @@ namespace Parque.Persistence.Migrations
                     b.Property<bool>("HasForm")
                         .HasColumnType("bit");
 
-                    b.Property<int>("IdTypeOfPulblication")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageRoute")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -284,14 +281,17 @@ namespace Parque.Persistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("idTypeOfPublication")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdTypeOfPulblication");
+                    b.HasIndex("idTypeOfPublication");
 
                     b.ToTable("Publication", (string)null);
                 });
 
-            modelBuilder.Entity("Parque.Domain.Entites.Publishing", b =>
+            modelBuilder.Entity("Parque.Domain.Entites.PublishingHouse", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -321,7 +321,7 @@ namespace Parque.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publishings", (string)null);
+                    b.ToTable("PublishingHouse", (string)null);
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Reservation", b =>
@@ -533,21 +533,16 @@ namespace Parque.Persistence.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("IdRol")
                         .HasColumnType("int");
 
                     b.Property<int>("IdTypeDocument")
                         .HasColumnType("int");
-
-                    b.Property<string>("IdentityDocument")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("LastModifiedBy")
                         .HasMaxLength(30)
@@ -556,15 +551,15 @@ namespace Parque.Persistence.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("NationalIdentificationNumber")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -577,6 +572,9 @@ namespace Parque.Persistence.Migrations
                         .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("IdRol");
 
@@ -617,20 +615,20 @@ namespace Parque.Persistence.Migrations
 
             modelBuilder.Entity("Parque.Domain.Entites.NewsPaper", b =>
                 {
-                    b.HasOne("Parque.Domain.Entites.Publishing", "IdPublishingNavigation")
+                    b.HasOne("Parque.Domain.Entites.PublishingHouse", "IdPublishingHouseNavigation")
                         .WithMany("NewsPapers")
-                        .HasForeignKey("IdPublishing")
+                        .HasForeignKey("IdPublishingHouse")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IdPublishingNavigation");
+                    b.Navigation("IdPublishingHouseNavigation");
                 });
 
             modelBuilder.Entity("Parque.Domain.Entites.Publication", b =>
                 {
                     b.HasOne("Parque.Domain.Entites.TypePublication", "IdTypePublicationNavigation")
                         .WithMany("Publications")
-                        .HasForeignKey("IdTypeOfPulblication")
+                        .HasForeignKey("idTypeOfPublication")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -685,7 +683,7 @@ namespace Parque.Persistence.Migrations
                     b.Navigation("Inscriptions");
                 });
 
-            modelBuilder.Entity("Parque.Domain.Entites.Publishing", b =>
+            modelBuilder.Entity("Parque.Domain.Entites.PublishingHouse", b =>
                 {
                     b.Navigation("NewsPapers");
                 });

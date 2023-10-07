@@ -1,7 +1,9 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Parque.Application.Behaviours;
+using Parque.Application.Mappings;
 using System.Reflection;
 
 namespace Parque.Application
@@ -14,7 +16,13 @@ namespace Parque.Application
             services.AddMediatR(p => p.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-
+            // Configuración de AutoMapper
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<GeneralProfile>(); // Agregar el perfil GeneralProfile
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }

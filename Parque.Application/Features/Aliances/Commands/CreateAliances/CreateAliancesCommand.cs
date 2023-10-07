@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
+using Parque.Application.DTOs.Aliances;
 using Parque.Application.Interfaces;
 using Parque.Application.Wrappers;
 using Parque.Domain.Entites;
 
 namespace Parque.Application.Features.Aliances.Commands.CreateAliances
 {
-    public class CreateAliancesCommand : IRequest<GenericResponse<int>>
+    public class CreateAliancesCommand : IRequest<GenericResponse<AliancesDTO>>
     {
         public string Name { get; set; }
         public string AlianceDate { get; set; }
@@ -16,8 +17,7 @@ namespace Parque.Application.Features.Aliances.Commands.CreateAliances
         public string Base64Archivo { get; set; }
         public string NombreCompletoArchivo { get; set; }
     }
-
-    public class CreateAliancesCommandHandler : IRequestHandler<CreateAliancesCommand, GenericResponse<int>>
+    internal class CreateAliancesCommandHandler : IRequestHandler<CreateAliancesCommand, GenericResponse<AliancesDTO>>
     {
         private readonly IRepositoryAsync<Aliance> _repositoryAsync;
         private readonly IMapper _mapper;
@@ -26,34 +26,23 @@ namespace Parque.Application.Features.Aliances.Commands.CreateAliances
         {
             _repositoryAsync = repositoryAsync;
             _mapper = mapper;
-
         }
 
-        public async Task<GenericResponse<int>> Handle(CreateAliancesCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResponse<AliancesDTO>> Handle(CreateAliancesCommand request, CancellationToken cancellationToken)
         {
-
             try
             {
-                Aliance alianzaNueva = new Aliance()
-                {
-                    Description = request.Description,
-                    Name = request.Name,
-                    AlianceDate = request.AlianceDate,
-                    IdTypeAliance = request.IdTypeAliance,
-                    DocumentRoute = request.DocumentRoute
-                };
-
+                Aliance alianzaNueva = _mapper.Map<CreateAliancesCommand, Aliance>(request);
                 var alianza = await _repositoryAsync.CreateAsync(alianzaNueva);
                 await _repositoryAsync.SaveChangesAsync();
+                var alince = await _repositoryAsync.GetAsync(p => p.Id == alianzaNueva.Id, includeProperties: $"{nameof(Aliance.IdTypeAliancesNavigation)}");
 
-                return new GenericResponse<int>(alianza.Id);
+                return new GenericResponse<AliancesDTO>(_mapper.Map<AliancesDTO>(alince));
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
     }
 }

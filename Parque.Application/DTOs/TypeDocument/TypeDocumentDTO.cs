@@ -8,6 +8,7 @@ namespace Parque.Application.DTOs.TypeDocument
 {
     public class TypeDocumentDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

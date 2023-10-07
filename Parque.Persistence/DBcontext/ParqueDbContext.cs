@@ -23,7 +23,7 @@ namespace Parque.Persistence.DBcontext
         public virtual DbSet<Inscription> Inscriptions { get; set; }
         public virtual DbSet<NewsPaper> NewsPapers { get; set; }
         public virtual DbSet<Publication> Publications { get; set; }
-        public virtual DbSet<Publishing> Publishings { get; set; }
+        public virtual DbSet<PublishingHouse> Editorials { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Rol> Roles { get; set; }
         public virtual DbSet<TypeAliance> TypeAliances { get; set; }

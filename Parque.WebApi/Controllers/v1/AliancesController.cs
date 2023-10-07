@@ -18,24 +18,21 @@ namespace Parque.WebApi.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateAliancesCommand command)
+        public async Task<IActionResult> Post(CreateAliancesCommand entity)
         {
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(entity));
         }
 
         [HttpGet("id")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await Mediator.Send(new GetByIdAliancesQuery()
-            {
-                Id = id
-            }));
+            return Ok(await Mediator.Send(new GetByIdAliancesQuery(){ Id = id }));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateAliancesCommand command)
+        public async Task<IActionResult> Put(UpdateAliancesCommand entity)
         {
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(entity));
         }
 
 
@@ -47,7 +44,5 @@ namespace Parque.WebApi.Controllers.v1
                 Id = id
             }));
         }
-
-
     }
 }

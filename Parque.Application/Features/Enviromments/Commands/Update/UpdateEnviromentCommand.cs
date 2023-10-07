@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Parque.Application.DTOs.Enviroment;
 using Parque.Application.Exceptions;
 using Parque.Application.Interfaces;
 using Parque.Application.Wrappers;
@@ -6,7 +8,7 @@ using Parque.Domain.Entites;
 
 namespace Parque.Application.Features.Enviromments.Commands.Update
 {
-    public class UpdateEnviromentCommand : IRequest<GenericResponse<bool>>
+    public class UpdateEnviromentCommand : IRequest<GenericResponse<EnviromentDTO>>
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -14,32 +16,33 @@ namespace Parque.Application.Features.Enviromments.Commands.Update
         public string DocumentRoute { get; set; }
     }
 
-    internal class UpdateEnviromentCommandHandler : IRequestHandler<UpdateEnviromentCommand, GenericResponse<bool>>
+    internal class UpdateEnviromentCommandHandler : IRequestHandler<UpdateEnviromentCommand, GenericResponse<EnviromentDTO>>
     {
         private readonly IRepositoryAsync<Enviroment> _repositoryAsync;
+        private readonly IMapper _mapper;
 
-        public UpdateEnviromentCommandHandler(IRepositoryAsync<Enviroment> repositoryAsync)
+        public UpdateEnviromentCommandHandler(IRepositoryAsync<Enviroment> repositoryAsync, IMapper mapper)
         {
             _repositoryAsync = repositoryAsync;
+            _mapper = mapper;
         }
 
 
-        public async Task<GenericResponse<bool>> Handle(UpdateEnviromentCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResponse<EnviromentDTO>> Handle(UpdateEnviromentCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                Enviroment entity = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
-                if (entity == null)
-                    throw new ApiException("El ambiente no fue encontrado");
+                Enviroment enviroment = await _repositoryAsync.GetAsync(p => p.Id == request.Id);
+                if (enviroment == null)
+                    throw new ApiException($"The environment with id {request.Id} does not exist");
 
-                entity.Title = request.Title;
-                entity.DocumentRoute = request.DocumentRoute;
-                entity.Description = request.Description;
-                bool result = await _repositoryAsync.UpdateAsync(entity);
+                enviroment.Title = request.Title;
+                enviroment.DocumentRoute = request.DocumentRoute;
+                enviroment.Description = request.Description;
+                var updateEnviroment = await _repositoryAsync.UpdateAsync(enviroment);
                 await _repositoryAsync.SaveChangesAsync();
 
-                return new GenericResponse<bool>(result);
-
+                return new GenericResponse<EnviromentDTO>(_mapper.Map<EnviromentDTO>(updateEnviroment));
             }
             catch (Exception)
             {

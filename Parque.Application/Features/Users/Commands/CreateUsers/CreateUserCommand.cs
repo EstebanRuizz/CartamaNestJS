@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Parque.Application.DTOs.Users;
+using Parque.Application.Exceptions;
 using Parque.Application.Interfaces;
 using Parque.Application.Wrappers;
 using Parque.Domain.Entites;
@@ -12,12 +14,11 @@ using System.Threading.Tasks;
 
 namespace Parque.Application.Features.Users.Commands.CreateUsers
 {
-    public class CreateUserCommand : IRequest<GenericResponse<int>>
+    public class CreateUserCommand : IRequest<GenericResponse<UserListDTO>>
     {
-        public string IdentityDocument { get; set; }
+        public string NationalIdentificationNumber { get; set; }
         public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FullName { get; set; }
         public string Phone { get; set; }
         public string Password { get; set; }
         public string ProfilePictureRoute { get; set; }
@@ -25,7 +26,7 @@ namespace Parque.Application.Features.Users.Commands.CreateUsers
         public int IdRol { get; set; }
     }
 
-    internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, GenericResponse<int>>
+    internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, GenericResponse<UserListDTO>>
     {
         private readonly IRepositoryAsync<User> _repository;
         private readonly IMapper _mapper;
@@ -36,33 +37,40 @@ namespace Parque.Application.Features.Users.Commands.CreateUsers
             _mapper = mapper;
         }
 
-        public async Task<GenericResponse<int>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResponse<UserListDTO>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                User nuevoUsuario = new User()
-                {
-                    IdentityDocument = request.IdentityDocument,
-                    Email = request.Email,
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    Phone = request.Phone,
-                    Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                    ProfilePictureRoute = request.ProfilePictureRoute,
-                    IdTypeDocument = request.IdTypeDocument,
-                    IdRol = request.IdRol
-                };
+                await ValidateNewUser(request);
 
-                var usuario = await _repository.CreateAsync(nuevoUsuario);
+                User user = _mapper.Map<CreateUserCommand, User>(request);
+                user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+                var newUser = await _repository.CreateAsync(user);
                 await _repository.SaveChangesAsync();
 
-                return new GenericResponse<int>(usuario.Id);
+                return new GenericResponse<UserListDTO>(_mapper.Map<User, UserListDTO>(newUser));
             }
-            catch (Exception)
+            catch (ValidationException ex)
             {
-
-                throw;
+                return new GenericResponse<UserListDTO>(ex.Errors, statusCode: 400);
             }
         }
+        private async Task ValidateNewUser(CreateUserCommand request)
+        {
+            var existingUserWithNationalIdentification = await _repository.GetAsync(user => user.NationalIdentificationNumber == request.NationalIdentificationNumber);
+            if (existingUserWithNationalIdentification != null)
+            {
+                throw new ValidationException(new List<string> { "NationalIdentificationNumber already in use." });
+            }
+            var existingUserWithEmail = await _repository.GetAsync(user => user.Email == request.Email);
+            if (existingUserWithEmail != null)
+            {
+                throw new ValidationException(new List<string> { "Email already in use." });
+            }
+        }
+
     }
+
+
 }
